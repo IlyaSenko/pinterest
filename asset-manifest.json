@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/pinterest/static/css/main.1506ce59.css",
+    "main.js": "/pinterest/static/js/main.bf76d0f5.js",
+    "index.html": "/pinterest/index.html",
+    "static/media/cross.svg": "/pinterest/static/media/cross.57c72c30681dacd8c4817fa69a93b99d.svg",
+    "static/media/arrow-left.svg": "/pinterest/static/media/arrow-left.d301070a3b1d3a431c6c8ce3ef8caba3.svg",
+    "static/media/arrow-right.svg": "/pinterest/static/media/arrow-right.805324371be1d1a34ed33b2819f4bac5.svg",
+    "main.1506ce59.css.map": "/pinterest/static/css/main.1506ce59.css.map",
+    "main.bf76d0f5.js.map": "/pinterest/static/js/main.bf76d0f5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1506ce59.css",
+    "static/js/main.bf76d0f5.js"
+  ]
+}
