@@ -1,0 +1,31 @@
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100vw - 144px);
+  height: calc(100vh - 120px);
+  background: white;
+  border-radius: 5px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 30px;
+  left: 37px;
+  transform: translate(-50%, -50%);
+}
+
+.goToPreviousImageButton {
+  position: absolute;
+  top: 50%;
+  left: 37px;
+  transform: translate(-50%, -50%);
+}
+
+.goToNextImageButton {
+  position: absolute;
+  top: 50%;
+  right: 37px;
+  transform: translate(50%, -50%);
+}
