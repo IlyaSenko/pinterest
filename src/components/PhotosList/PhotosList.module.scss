@@ -3,6 +3,10 @@
   column-gap: 24px;
   padding: 60px 72px;
   column-width: auto;
+
+  @media (max-width: 991px) {
+    column-count: 1;
+  }
 }
 
 .button {

@@ -1,13 +1,9 @@
-import { Box, Modal } from "@mui/material";
 import { useCallback } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 import usePhotos from "../../hooks/usePhotos";
 import mergePhotos from "../../utils/mergePhotos";
-import crossIcon from "../../assets/img/cross.svg";
-import arrowLeft from "../../assets/img/arrow-left.svg";
-import arrowRight from "../../assets/img/arrow-right.svg";
-import styles from "./PhotoModal.module.scss";
-import classNames from "classnames";
-import DownloadButton from "../DownloadButton";
+import PhotoModalDesktop from "../PhotoModalDesktop";
+import PhotoModalMobile from "../PhotoModalMobile";
 
 export default function PhotoModal({
   openedImgId,
@@ -16,6 +12,7 @@ export default function PhotoModal({
   openedImgId: string;
   setOpenedImgId: (id: string | null) => void;
 }): JSX.Element | null {
+  const isMobile = useIsMobile();
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = usePhotos();
 
   const currentPhoto = data.find(({ id }) => id === openedImgId);
@@ -61,49 +58,19 @@ export default function PhotoModal({
 
   if (!currentPhoto) return null;
 
-  return (
-    <Modal open>
-      <>
-        <button
-          className={classNames(styles.closeButton, styles.button)}
-          type="button"
-          onClick={handleCloseModal}
-        >
-          <img src={crossIcon} alt="close" />
-        </button>
-        <button
-          className={classNames(styles.goToPreviousImageButton, styles.button)}
-          type="button"
-          onClick={goToPreviousImage}
-        >
-          <img src={arrowLeft} alt="go back" />
-        </button>
-        <button
-          className={classNames(styles.goToNextImageButton, styles.button)}
-          type="button"
-          onClick={goToNextImage}
-        >
-          <img src={arrowRight} alt="go back" />
-        </button>
-        <Box className={styles.box}>
-          <div className={styles.boxHeader}>
-            <div className={styles.userBlock}>
-              <img
-                src={currentPhoto.user.profile_image.large}
-                alt="avatar"
-                className={styles.avatar}
-              />
-              <h2 className={styles.userName}>{currentPhoto.user.name}</h2>
-            </div>
-            <DownloadButton urls={currentPhoto.urls} />
-          </div>
-          <img
-            src={currentPhoto.urls.regular}
-            alt=""
-            className={styles.mainPhoto}
-          />
-        </Box>
-      </>
-    </Modal>
+  return isMobile ? (
+    <PhotoModalMobile
+      currentPhoto={currentPhoto}
+      handleCloseModal={handleCloseModal}
+      goToPreviousImage={goToPreviousImage}
+      goToNextImage={goToNextImage}
+    ></PhotoModalMobile>
+  ) : (
+    <PhotoModalDesktop
+      currentPhoto={currentPhoto}
+      handleCloseModal={handleCloseModal}
+      goToPreviousImage={goToPreviousImage}
+      goToNextImage={goToNextImage}
+    />
   );
 }

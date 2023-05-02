@@ -6,6 +6,17 @@ export interface IPhotoUrls {
   thumb: string;
 }
 
+export interface IUser {
+  id: string;
+  username: string;
+  name: string;
+  profile_image: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+}
+
 export interface IPhoto {
   id: string;
   created_at: string;
@@ -15,16 +26,7 @@ export interface IPhoto {
   color: string | null;
   likes: number;
   description: string | null;
-  user: {
-    id: string;
-    username: string;
-    name: string;
-    profile_image: {
-      small: string;
-      medium: string;
-      large: string;
-    };
-  };
+  user: IUser;
   links: {
     download: string;
     download_location: string;
