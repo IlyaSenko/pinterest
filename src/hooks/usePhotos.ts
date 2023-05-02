@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { IPage } from "../types/UnsplashTypes";
+import mergePhotos from "../utils/mergePhotos";
 import useApiInstance from "./useApiInstance";
 
 const PAGE_SIZE = 20;
@@ -7,7 +8,7 @@ const PAGE_SIZE = 20;
 export default function usePhotos() {
   const apiInstance = useApiInstance();
 
-  return useInfiniteQuery(
+  const { data, ...res } = useInfiniteQuery(
     ["photos"],
     ({ pageParam = 1 }) =>
       apiInstance.get("/photos", {
@@ -26,4 +27,6 @@ export default function usePhotos() {
       },
     }
   );
+
+  return { data: mergePhotos(data), ...res };
 }

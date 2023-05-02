@@ -1,11 +1,13 @@
 import { Box, Modal } from "@mui/material";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import usePhotos from "../../hooks/usePhotos";
 import mergePhotos from "../../utils/mergePhotos";
 import crossIcon from "../../assets/img/cross.svg";
 import arrowLeft from "../../assets/img/arrow-left.svg";
 import arrowRight from "../../assets/img/arrow-right.svg";
 import styles from "./PhotoModal.module.scss";
+import classNames from "classnames";
+import DownloadButton from "../DownloadButton";
 
 export default function PhotoModal({
   openedImgId,
@@ -16,27 +18,29 @@ export default function PhotoModal({
 }): JSX.Element | null {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = usePhotos();
 
-  const photos = useMemo(() => mergePhotos(data), [data]);
-
-  const currentPhoto = photos?.find(({ id }) => id === openedImgId);
+  const currentPhoto = data.find(({ id }) => id === openedImgId);
 
   const handleCloseModal = useCallback(() => {
     setOpenedImgId(null);
   }, [setOpenedImgId]);
 
   const goToPreviousImage = useCallback(() => {
-    if (!photos || !currentPhoto) return;
+    if (!currentPhoto) return;
 
-    setOpenedImgId(photos[photos?.indexOf(currentPhoto) - 1].id);
-  }, [currentPhoto, photos, setOpenedImgId]);
+    const previousPhoto = data[data.indexOf(currentPhoto) - 1];
+
+    if (!previousPhoto) return;
+
+    setOpenedImgId(previousPhoto.id);
+  }, [currentPhoto, data, setOpenedImgId]);
 
   const goToNextImage = useCallback(() => {
-    if (!photos || !currentPhoto) return;
+    if (!data || !currentPhoto) return;
 
-    const nextPhotoIndex = photos?.indexOf(currentPhoto) + 1;
+    const nextPhotoIndex = data.indexOf(currentPhoto) + 1;
 
-    if (nextPhotoIndex < photos.length) {
-      setOpenedImgId(photos[nextPhotoIndex].id);
+    if (nextPhotoIndex < data.length) {
+      setOpenedImgId(data[nextPhotoIndex].id);
     } else if (!isFetchingNextPage && hasNextPage) {
       fetchNextPage().then((res) => {
         const newPhotos = mergePhotos(res?.data);
@@ -51,7 +55,7 @@ export default function PhotoModal({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    photos,
+    data,
     setOpenedImgId,
   ]);
 
@@ -61,29 +65,43 @@ export default function PhotoModal({
     <Modal open>
       <>
         <button
-          className={styles.closeButton}
+          className={classNames(styles.closeButton, styles.button)}
           type="button"
           onClick={handleCloseModal}
         >
           <img src={crossIcon} alt="close" />
         </button>
         <button
-          className={styles.goToPreviousImageButton}
+          className={classNames(styles.goToPreviousImageButton, styles.button)}
           type="button"
           onClick={goToPreviousImage}
         >
           <img src={arrowLeft} alt="go back" />
         </button>
         <button
-          className={styles.goToNextImageButton}
+          className={classNames(styles.goToNextImageButton, styles.button)}
           type="button"
           onClick={goToNextImage}
         >
           <img src={arrowRight} alt="go back" />
         </button>
         <Box className={styles.box}>
-          <img src={currentPhoto.urls.small} alt="" />
-          {photos?.indexOf(currentPhoto)}
+          <div className={styles.boxHeader}>
+            <div className={styles.userBlock}>
+              <img
+                src={currentPhoto.user.profile_image.large}
+                alt="avatar"
+                className={styles.avatar}
+              />
+              <h2 className={styles.userName}>{currentPhoto.user.name}</h2>
+            </div>
+            <DownloadButton urls={currentPhoto.urls} />
+          </div>
+          <img
+            src={currentPhoto.urls.regular}
+            alt=""
+            className={styles.mainPhoto}
+          />
         </Box>
       </>
     </Modal>

@@ -3,10 +3,45 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: calc(100vw - 144px);
-  height: calc(100vh - 120px);
+  width: calc(100vw - 192px);
+  height: calc(100vh - 168px);
   background: white;
   border-radius: 5px;
+  padding: 24px;
+}
+
+.boxHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.userBlock {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-right: 12px;
+}
+
+.userName {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.15;
+  margin: 0;
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .closeButton {
@@ -28,4 +63,10 @@
   top: 50%;
   right: 37px;
   transform: translate(50%, -50%);
+}
+
+.mainPhoto {
+  width: 100%;
+  height: calc(100% - 50px);
+  object-fit: contain;
 }

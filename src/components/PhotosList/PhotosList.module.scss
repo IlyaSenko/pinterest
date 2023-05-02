@@ -1,0 +1,26 @@
+.wrapper {
+  column-count: 3;
+  column-gap: 24px;
+  padding: 60px 72px;
+  column-width: auto;
+}
+
+.button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  margin-bottom: 24px;
+  break-inside: avoid;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+}

@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import usePhotos from "../../hooks/usePhotos";
-import mergePhotos from "../../utils/mergePhotos";
+import styles from "./PhotosList.module.scss";
 
 export default function PhotosList({
   setOpenedImgId,
@@ -8,8 +8,6 @@ export default function PhotosList({
   setOpenedImgId: (id: string) => void;
 }): JSX.Element {
   const { data, isFetchingNextPage, fetchNextPage, hasNextPage } = usePhotos();
-
-  const photos = useMemo(() => mergePhotos(data), [data]);
 
   const handleScroll = useCallback(() => {
     if (
@@ -30,10 +28,15 @@ export default function PhotosList({
   }, [handleScroll]);
 
   return (
-    <div>
-      {photos?.map(({ urls: { small }, id }) => (
-        <button type="button" onClick={() => setOpenedImgId(id)} key={id}>
-          <img src={small} alt="" width="400" />
+    <div className={styles.wrapper}>
+      {data?.map(({ urls: { small }, id }) => (
+        <button
+          type="button"
+          onClick={() => setOpenedImgId(id)}
+          key={id}
+          className={styles.button}
+        >
+          <img src={small} alt="" />
         </button>
       ))}
     </div>

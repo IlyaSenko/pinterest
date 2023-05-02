@@ -1,3 +1,11 @@
+export interface IPhotoUrls {
+  raw: string;
+  full: string;
+  regular: string;
+  small: string;
+  thumb: string;
+}
+
 export interface IPhoto {
   id: string;
   created_at: string;
@@ -17,13 +25,11 @@ export interface IPhoto {
       large: string;
     };
   };
-  urls: {
-    raw: string;
-    full: string;
-    regular: string;
-    small: string;
-    thumb: string;
+  links: {
+    download: string;
+    download_location: string;
   };
+  urls: IPhotoUrls;
 }
 
 export interface IPage {

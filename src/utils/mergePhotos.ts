@@ -4,7 +4,9 @@ import { IPhoto } from "../types/UnsplashTypes";
 
 export default function mergePhotos(
   data: InfiniteData<AxiosResponse<any, any>> | undefined
-) {
+): IPhoto[] {
+  if (!data) return [];
+
   return data?.pages
     .reduce((allPhotos, currentPage) => {
       return [...allPhotos, ...currentPage.data];
